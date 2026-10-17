@@ -1,5 +1,5 @@
-/* CA Data site, Apple-method pass (10 Oct 2026): type-led, continuous bands, editorial portraits (rounded corners, hairline edge), no cards */
-:root { --ink:#10202b; --muted:#4d5e57; --soft:#e6f1ea; --tint:#f4f8f5; --accent:#0b7d45; --accent-dark:#08653a; --navy:#0b2a1c; --max:1120px;
+/* CA Data site, layout pass (15 Oct 2026): full-width tonal bands, one tile style (16px radius, hairline, no heavy shadow), numbered section labels, green brand */
+:root { --ink:#10202b; --muted:#4d5e57; --soft:#e6f1ea; --tint:#f4f8f5; --accent:#0b7d45; --accent-dark:#08653a; --navy:#0b2a1c; --max:1320px; --gut:48px; --r:16px; --hair:rgba(16,32,43,.12); --pad:clamp(22px, 2.4vw, 36px);
   --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI Variable Display", "Segoe UI", Inter, sans-serif;
   --ease: cubic-bezier(.2,.8,.2,1); }
 * { box-sizing: border-box; }
@@ -8,12 +8,12 @@ body { margin: 0; background: #fff; color: var(--ink); font-family: var(--sans);
 a { color: inherit; }
 a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 6px; }
 .on-dark a:focus-visible { outline-color: #fff; }
-.shell { width: min(calc(100% - 48px), var(--max)); margin-inline: auto; }
+.shell { width: min(calc(100% - var(--gut)), var(--max)); margin-inline: auto; }
 .skip-link { position: fixed; top: 12px; left: 12px; z-index: 1000; padding: 10px 14px; background: #fff; border-radius: 10px; transform: translateY(-150%); }
 .skip-link:focus { transform: translateY(0); }
 
-/* header: one quiet bar, the logo and three destinations */
-.site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.88); backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%); }
+/* header: one quiet bar, logo and four destinations including Home */
+.site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.88); backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%); box-shadow: 0 1px 0 var(--hair); }
 .header-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 68px; }
 .header-inner > a { display: inline-flex; align-items: center; min-height: 44px; }
 .brand-logo { display: block; height: 40px; width: auto; }
@@ -24,12 +24,19 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
 .nav .nav-cta { margin-left: 6px; padding: 0 20px; background: var(--accent); color: #fff; }
 .nav .nav-cta:hover { background: var(--accent-dark); }
 
-/* hero: left-aligned type on a soft tonal field that fades into the page */
-.hero { padding: clamp(40px, 6vw, 72px) 0 clamp(48px, 6vw, 88px); background: linear-gradient(180deg, var(--soft) 0%, #fff 100%); }
+/* bands: each section spans the full width; the content sits in a 1320px container */
+.band { padding: clamp(56px, 7vw, 104px) 0; }
+.band-white { background: #fff; }
+.band-tint { background: var(--tint); }
+
+/* hero: headline left, one panel with the plain description and the action right */
+.hero { padding: clamp(40px, 6vw, 80px) 0 clamp(48px, 6vw, 88px); background: var(--soft); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 24px clamp(32px, 5vw, 80px); align-items: end; }
 .eyebrow { margin: 0 0 20px; color: var(--accent-dark); font-size: .875rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-h1 { max-width: 14ch; margin: 0 0 clamp(24px, 3vw, 36px); font-size: clamp(2.6rem, 7.2vw, 5.75rem); font-weight: 700; line-height: 1.07; letter-spacing: -.04em; }
-.lead { max-width: 33em; margin: 0; color: #2f4239; font-size: clamp(1.125rem, 1.7vw, 1.375rem); line-height: 1.5; }
-.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; margin-top: clamp(28px, 4vw, 44px); }
+h1 { max-width: 14ch; margin: 0; font-size: clamp(2.6rem, 6.4vw, 5.75rem); font-weight: 700; line-height: 1.07; letter-spacing: -.04em; }
+.tile { min-width: 0; padding: var(--pad); border-radius: var(--r); background: #fff; box-shadow: 0 0 0 1px var(--hair); }
+.lead { max-width: 33em; margin: 0; color: #2f4239; font-size: clamp(1.125rem, 1.5vw, 1.3125rem); line-height: 1.5; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; margin-top: clamp(20px, 3vw, 32px); }
 
 /* buttons and links */
 .btn { display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 28px; border-radius: 99px; background: var(--accent); color: #fff; font-weight: 650; text-decoration: none; transition: background .12s, transform .12s; }
@@ -37,30 +44,43 @@ h1 { max-width: 14ch; margin: 0 0 clamp(24px, 3vw, 36px); font-size: clamp(2.6re
 .btn:active { transform: scale(.98); }
 .btn-light { background: #fff; color: var(--navy); }
 .btn-light:hover { background: #e6f1ea; }
+.btn-line { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.55); }
+.btn-line:hover { background: rgba(255,255,255,.12); }
 .link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--accent-dark); font-weight: 650; text-decoration: none; }
 .link:hover { text-decoration: underline; text-underline-offset: 4px; }
 .arrow { width: 18px; height: 18px; flex: none; }
 .on-dark .link { color: #fff; }
 
-/* team: introduction, then one continuous editorial flow */
-.intro { padding: clamp(40px, 6vw, 80px) 0 clamp(16px, 3vw, 40px); }
-.intro-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 24px clamp(32px, 6vw, 96px); align-items: end; }
-h2 { margin: 0; font-size: clamp(2rem, 4.4vw, 3.5rem); font-weight: 700; line-height: 1.05; letter-spacing: -.035em; }
-.section-lead { margin: 0; max-width: 32em; color: var(--muted); font-size: 1.125rem; line-height: 1.55; }
+/* section header: number chip, small uppercase label, big title, short lead */
+.sec-head { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px clamp(32px, 5vw, 80px); align-items: end; margin-bottom: clamp(28px, 4vw, 52px); }
+.sec-label { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; color: var(--accent-dark); font-size: .8125rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.sec-num { display: inline-flex; align-items: center; justify-content: center; min-width: 36px; height: 28px; padding: 0 10px; border-radius: 99px; background: var(--accent); color: #fff; font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+.on-dark .sec-label { color: #b9dcc8; }
+.on-dark .sec-num { background: #fff; color: var(--navy); }
+h2 { margin: 0; font-size: clamp(2.25rem, 5vw, 4rem); font-weight: 700; line-height: 1.04; letter-spacing: -.035em; }
+.section-lead { margin: 0; max-width: 32em; color: var(--muted); font-size: 1.1875rem; line-height: 1.55; }
 
-.team { list-style: none; margin: 0; padding: 0 0 clamp(72px, 10vw, 128px); background: var(--tint); }
-.member { padding: clamp(48px, 7vw, 96px) 0 0; }
-.member-inner { display: grid; grid-template-columns: 5fr 7fr; gap: 32px clamp(40px, 7vw, 112px); align-items: center; }
-.member:nth-child(even) .member-inner { grid-template-columns: 7fr 5fr; }
-.member:nth-child(even) .portrait { order: 2; }
-.portrait { position: relative; margin: 0; aspect-ratio: 4 / 5; overflow: hidden; background: var(--soft); border-radius: 24px; box-shadow: 0 0 0 1px rgba(16,32,43,.14); }
+/* about: three tiles */
+.about-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; list-style: none; margin: 0; padding: 0; }
+.about-grid .tile { background: var(--tint); }
+.about-grid h3 { margin: 0 0 10px; font-size: 1.375rem; line-height: 1.2; letter-spacing: -.02em; }
+.about-grid p { margin: 0; color: #2f4239; }
+
+/* team: tiles, the founder full width, the rest two across on wide screens */
+.team { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.member { min-width: 0; }
+.member:first-child { grid-column: 1 / -1; }
+.member-inner { height: 100%; display: grid; grid-template-columns: minmax(150px, 220px) minmax(0, 1fr); gap: 24px clamp(20px, 2.4vw, 36px); align-items: start; }
+.member:first-child .member-inner { grid-template-columns: minmax(200px, 300px) minmax(0, 1fr); }
+.portrait { position: relative; margin: 0; aspect-ratio: 4 / 5; overflow: hidden; background: var(--soft); border-radius: var(--r); box-shadow: 0 0 0 1px rgba(16,32,43,.14); }
 .portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.text { max-width: 36em; }
-.member .role { margin: 0 0 12px; color: var(--accent-dark); font-size: .8125rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.member h3 { margin: 0 0 clamp(16px, 2vw, 24px); font-size: clamp(1.75rem, 3.2vw, 2.5rem); font-weight: 700; line-height: 1.08; letter-spacing: -.03em; }
-.member .bio { margin: 0; color: #2f4239; font-size: 1.125rem; line-height: 1.65; }
+.text { min-width: 0; max-width: 40em; }
+.member .role { margin: 0 0 10px; color: var(--accent-dark); font-size: .8125rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.member h3 { margin: 0 0 14px; font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 700; line-height: 1.1; letter-spacing: -.03em; }
+.member .bio { margin: 0; color: #2f4239; font-size: 1.0625rem; line-height: 1.65; }
+.member .bio + .bio, .member .rm-link { margin-top: 12px; }
 .tag { display: inline-block; margin: 0 0 14px; padding: 3px 12px; border-radius: 99px; background: #fff0c7; color: #5c3b05; font-size: .8125rem; font-weight: 700; }
-.affil { margin: 22px 0 0; padding-top: 16px; border-top: 1px solid rgba(16,32,43,.12); }
+.affil { margin: 20px 0 0; padding-top: 14px; border-top: 1px solid var(--hair); }
 .affil-h { margin: 0 0 8px; color: var(--muted); font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .affil ul { margin: 0; padding: 0; list-style: none; }
 .affil li { display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; padding: 5px 0; font-size: .9375rem; line-height: 1.45; color: #2f4239; }
@@ -68,24 +88,105 @@ h2 { margin: 0; font-size: clamp(2rem, 4.4vw, 3.5rem); font-weight: 700; line-he
 .affil li span { color: var(--muted); }
 .affil li:first-child strong { color: var(--accent-dark); }
 
-/* contact: full-bleed band, left-aligned like the hero */
-.contact { padding: clamp(72px, 10vw, 136px) 0 clamp(48px, 6vw, 72px); background: var(--navy); color: #fff; }
-.contact h2 { max-width: 18ch; color: #fff; }
-.contact p { max-width: 32em; margin: 20px 0 0; color: #d4e8dc; font-size: 1.125rem; }
-.contact-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 28px; margin-top: 36px; }
-.site-footer { margin-top: clamp(64px, 9vw, 112px); color: #a9c5b6; font-size: .875rem; }
+/* contact: full-width dark band, one panel holding every way to reach us */
+.contact { background: var(--navy); color: #fff; }
+.contact h2 { max-width: 14ch; color: #fff; }
+.contact-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 28px clamp(32px, 5vw, 80px); align-items: center; }
+.contact-copy .contact-text { max-width: 32em; margin: 20px 0 0; color: #d4e8dc; font-size: 1.125rem; }
+.contact-copy .sec-label { margin: 0 0 16px; }
+.contact-panel { display: grid; gap: 12px; padding: var(--pad); border-radius: var(--r); background: rgba(255,255,255,.07); box-shadow: 0 0 0 1px rgba(255,255,255,.2); }
+.contact-panel .btn { width: 100%; justify-content: space-between; min-height: 56px; overflow-wrap: anywhere; }
+
+/* footer: real links on the same dark green, hairline above */
+.site-footer { background: var(--navy); color: #a9c5b6; font-size: .9375rem; border-top: 1px solid rgba(255,255,255,.14); }
+.footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 32px; padding: 20px 0; }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 0 6px; }
+.footer-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px; color: #e6f1ea; text-decoration: none; }
+.footer-nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.footer-copy { margin: 0; }
 
 /* gentle reveal: opacity only plus a small rise; content never waits on it */
 .js .reveal { opacity: 0; transform: translateY(10px); transition: opacity .4s ease, transform .4s var(--ease); }
 .js .reveal.in { opacity: 1; transform: none; }
 
+@media (max-width: 1000px) {
+  .team { grid-template-columns: minmax(0, 1fr); }
+  .about-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 860px) {
+  .hero-grid, .sec-head, .contact-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  :root { --gut: 32px; }
+  .member-inner, .member:first-child .member-inner { grid-template-columns: minmax(0, 1fr); }
+  .portrait { width: min(100%, 300px); }
+  .nav { font-size: .875rem; gap: 0; }
+  .nav a { padding: 0 8px; }
+  .nav .nav-cta { padding: 0 12px; margin-left: 2px; }
+  .brand-logo { height: 32px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+/* ===== MOBILE PASS (16 Oct 2026): phone view, max-width 760px. Short hooks with Read more, compact portraits, tighter scale ===== */
+.rm-btn { display: none; }
+.rm-body, .rm-hook { margin: 0; }
+.rm-hook { display: none; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 @media (max-width: 760px) {
-  .intro-grid, .member-inner, .member:nth-child(even) .member-inner { grid-template-columns: 1fr; }
-  .member:nth-child(even) .portrait { order: 0; }
-  .portrait { width: min(100%, 320px); }
-  .nav a { padding: 0 10px; }
-  .nav .nav-cta { padding: 0 14px; margin-left: 2px; }
-  .brand-logo { height: 34px; }
+  :root { --gut: 32px; --pad: 16px; --r: 14px; }
+  body { font-size: 1rem; line-height: 1.55; }
+  html { scroll-padding-top: 60px; }
+  .header-inner { min-height: 56px; }
+  .brand-logo { height: 30px; }
+  .band { padding: 32px 0; }
+  .hero { padding: 24px 0 28px; }
+  .hero-grid { gap: 16px; }
+  .eyebrow { margin: 0 0 10px; font-size: .75rem; }
+  h1 { max-width: none; font-size: 2rem; line-height: 1.1; letter-spacing: -.03em; }
+  h2 { font-size: 1.75rem; line-height: 1.1; letter-spacing: -.03em; }
+  .lead, .section-lead, .contact-copy .contact-text { font-size: 1rem; line-height: 1.5; }
+  .hero-actions { margin-top: 12px; gap: 2px 18px; }
+  .btn { min-height: 48px; padding: 0 22px; }
+  .sec-head { gap: 10px; margin-bottom: 18px; }
+  .sec-label { margin: 0 0 10px; font-size: .75rem; }
+  .about-grid, .team { gap: 10px; }
+  .about-grid h3 { margin: 0 0 4px; font-size: 1.125rem; }
+  .contact-grid { gap: 20px; }
+  .contact-copy .contact-text { margin: 10px 0 0; }
+  .contact-panel { gap: 8px; }
+  .contact-panel .btn { min-height: 48px; }
+  .footer-inner { padding: 8px 0 12px; gap: 0; }
+
+  /* team tile: small round portrait beside role and name, bio hook full width below */
+  .member-inner, .member:first-child .member-inner { grid-template-columns: 72px minmax(0, 1fr); gap: 0 14px; align-items: center; }
+  .text { display: contents; }
+  .portrait { grid-column: 1; grid-row: 1 / span 2; width: 72px; height: 72px; aspect-ratio: 1; border-radius: 50%; }
+  .member .role { grid-column: 2; grid-row: 1; align-self: end; margin: 0 0 2px; font-size: .75rem; }
+  .member h3 { grid-column: 2; grid-row: 2; align-self: start; margin: 0; font-size: 1.25rem; }
+  .member .rm { grid-column: 1 / -1; grid-row: 3; margin-top: 10px; }
+  .member .bio { font-size: 1rem; line-height: 1.5; }
+  .member .bio + .bio { margin-top: 4px; }
+  .rm-link .bio { margin: 0; }
+  .affil { margin-top: 10px; padding-top: 8px; }
+  .affil li { padding: 3px 0; font-size: .875rem; }
+
+  /* Read more: collapsed to two lines; the full text stays in the HTML. Needs JS; without JS everything shows in full */
+  .js .rm.rm-can .rm-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0; margin: 0; border: 0; background: none; color: var(--accent-dark); font: inherit; font-weight: 650; cursor: pointer; }
+  .js .rm.rm-can .rm-btn::after { content: ""; width: 8px; height: 8px; margin-top: -4px; border: solid currentColor; border-width: 0 2px 2px 0; transform: rotate(45deg); transition: transform .15s; }
+  .js .rm.rm-can.open .rm-btn::after { margin-top: 3px; transform: rotate(-135deg); }
+  .js .on-dark .rm.rm-can .rm-btn { color: #fff; }
+  .js .rm:not(.open) .rm-hook { display: block; }
+  .js .rm:not(.open) .rm-body { display: none; }
+  .js .rm:not(.open) .rm-extra { display: none; }
+}
+
+/* D1 (desktop only): short green rule before the hero eyebrow. Remove by setting D1_EYEBROW_RULE = False in build.py */
+@media (min-width: 761px) {
+  .eyebrow-rule { display: flex; align-items: center; gap: 14px; }
+  .eyebrow-rule::before { content: ""; width: 32px; height: 2px; background: var(--accent); flex: none; }
+}
+/* D2 (desktop only): second half of the hero headline in brand green. Remove by setting D2_H1_ACCENT = False in build.py */
+@media (min-width: 761px) {
+  .h1-accent { color: var(--accent); }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -98,4 +199,80 @@ h2 { margin: 0; font-size: clamp(2rem, 4.4vw, 3.5rem); font-weight: 700; line-he
 @media (prefers-contrast: more) {
   .site-header { background: #fff; box-shadow: 0 1px 0 var(--ink); }
   .portrait { outline: 1px solid var(--ink); }
+}
+
+/* ===== QA fixes (16 Oct 2026). Each block below is switched by a flag in build.py (D3..D8) ===== */
+/* D3: subhead and contact links in the first screen */
+.hero-sub { max-width: 24em; margin: 18px 0 0; color: #2f4239; font-size: clamp(1.125rem, 1.8vw, 1.5rem); font-weight: 600; line-height: 1.3; }
+.hero-contact { display: flex; flex-wrap: wrap; gap: 0 20px; margin: 4px 0 0; }
+.hero-contact .link { font-size: .9375rem; }
+@media (max-width: 760px) { .hero-sub { margin-top: 8px; font-size: 1.0625rem; } .hero-contact { margin-top: 0; gap: 0 16px; } }
+/* D4: larger logo */
+.brand-logo { height: 56px; }
+.header-inner { min-height: 72px; }
+@media (max-width: 760px) { .brand-logo { height: 44px; } .header-inner { min-height: 56px; } }
+/* D5: even desktop team tiles */
+@media (min-width: 1000px) {
+  .member:first-child .text { max-width: none; }
+  .member:first-child .rm { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 0 clamp(24px, 3vw, 48px); align-items: start; }
+  .member:first-child .rm-body { grid-column: 1; grid-row: 1; }
+  .member:first-child .rm-link { grid-column: 1; grid-row: 2; }
+  .member:first-child .rm-aff { grid-column: 2; grid-row: 1 / span 2; }
+  .member:first-child .affil { margin: 0; padding: 0 0 0 clamp(20px, 2.4vw, 32px); border-top: 0; border-left: 1px solid var(--hair); }
+  .member:not(:first-child) .member-inner { grid-template-columns: 112px minmax(0, 1fr); gap: 0 20px; align-items: center; align-content: start; }
+  .member:not(:first-child) .text { display: contents; }
+  .member:not(:first-child) .portrait { grid-column: 1; grid-row: 1 / span 2; width: 112px; height: 112px; aspect-ratio: 1; border-radius: 50%; }
+  .member:not(:first-child) .role { grid-column: 2; grid-row: 1; align-self: end; margin: 0 0 4px; }
+  .member:not(:first-child) h3 { grid-column: 2; grid-row: 2; align-self: start; margin: 0; }
+  .member:not(:first-child) .rm { grid-column: 1 / -1; grid-row: 3; margin-top: 14px; }
+}
+@media (min-width: 761px) { .member .bio { line-height: 1.7; } }
+
+/* D7: footer links line up with the content edge */
+.footer-nav { margin-left: -10px; }
+/* D8: Contact heading uses the full column */
+.contact h2 { max-width: none; }
+/* CLIP FIX (16 Oct 2026): the header (logo + four links) needed 351 px; any viewport narrower than that (a 320-365 px phone, or a narrow
+   iframe with a scrollbar) scrolled sideways and shifted the hero text off the left edge. The header now shrinks, never overflows. */
+/* Header robust (16 Oct 2026, 2nd step): the logo keeps a protected size and never shrinks; when logo + nav do not fit on one row
+   (narrow screens, large system text) the nav wraps to its own row, and its links may wrap too, so nothing can overflow at any width or text size. */
+.header-inner { flex-wrap: wrap; row-gap: 0; }
+.header-inner > a { flex: 0 0 auto; }
+.brand-logo { flex: none; min-width: 60px; width: auto; max-width: none; object-fit: contain; }
+.nav { flex: 0 1 auto; flex-wrap: wrap; max-width: 100%; min-width: 0; }
+.nav a { white-space: nowrap; }
+.link, .btn, .footer-nav a { max-width: 100%; min-width: 0; overflow-wrap: anywhere; }
+.hero-contact, .hero-actions { min-width: 0; }
+h1, h2, h3, p, li { overflow-wrap: anywhere; }
+/* 'Contact us' is always one line: header button never wraps (the header drops to two rows instead), hero button shrinks its font a little on very narrow screens */
+.nav .nav-cta, .hero-actions .btn { white-space: nowrap; }
+/* CALL LABELS (17 Oct 2026): 'Call Afriyie' and the number are each one line; the pair may stack, a part never breaks. Font caps with the viewport so a part always fits. */
+.nw { white-space: nowrap; overflow-wrap: normal; }
+.call-t { display: inline-flex; flex-wrap: wrap; column-gap: .4em; min-width: 0; }
+.call-t .nw { font-size: min(1em, 5.6vw); }
+.contact-panel .btn .call-t { flex: 1 1 auto; }
+/* E-MAIL (17 Oct 2026): the address is never split; it is one no-wrap piece whose font shrinks with the viewport (min 1em / 4.4vw) */
+.em { white-space: nowrap; overflow-wrap: normal; font-size: min(1em, 4.4vw); }
+.contact-panel { container-type: inline-size; }
+.hero-contact { container-type: inline-size; }
+.hero-contact .em { font-size: min(1em, calc((100cqw - 1rem) / 13)); }
+.contact-panel .btn .em { flex: 1 1 auto; min-width: 0; font-size: min(1em, calc((100cqw - 5rem) / 13)); }
+@media (max-width: 400px) {
+  .hero-actions .btn { font-size: min(1em, 5vw); padding-inline: min(22px, 5vw); gap: min(10px, 2.5vw); }
+}
+@media (max-width: 400px) {
+  .header-inner { gap: 8px; }
+  .brand-logo { height: 36px; }
+  .nav a { padding: 0 6px; }
+  .nav .nav-cta { padding: 0 14px; margin-left: 0; }
+}
+@media (max-width: 370px) {
+  .header-inner { gap: 6px; }
+  .brand-logo { height: 36px; }
+  .nav { font-size: .8125rem; }
+  .nav a { padding: 0 6px; }
+  .nav .nav-cta { padding: 0 10px; margin-left: 0; }
+}
+@media (max-width: 340px) {
+  .nav a[href="#top"] { display: none; }
 }
